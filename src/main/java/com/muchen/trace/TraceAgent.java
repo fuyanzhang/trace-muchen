@@ -21,11 +21,9 @@ public class TraceAgent {
 
     public static void premain(String arg, Instrumentation instrumentation) {
 
-//        System.out.println("Enter preMain....");
 
         new AgentBuilder.Default().type(any()).transform(new AgentBuilder.Transformer() {
             public DynamicType.Builder<?> transform(DynamicType.Builder<?> builder, TypeDescription typeDescription, ClassLoader classLoader, JavaModule javaModule) {
-//                System.out.println("enter Transform");
                 //加入处理逻辑
                 MethodCallInterceptor interceptor = new MethodCallInterceptor();
                 builder = builder.method(not(isStatic()).and(any())).intercept(MethodDelegation.to(interceptor));
